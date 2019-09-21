@@ -30,15 +30,20 @@
                 cursor: pointer;
  		display: block; 
 		margin: 0 auto;
-		overflow: hidden;} 
+		overflow: hidden;
+	        white-space:normal} 
+
+
+      .card-header .btn-block{height: 20px; height: 20px}
 
       .accordion .card-header {background-color: #09839b;
-	                       font-size: 15px;}
+	                       font-size: 15px;
+                               padding: 0px}
  
       .accordion .btn {background-color: #09839b;
 	               font-size: 15px;
                        color: white;
-                       font-weight: bold;} 
+                       font-weight: bold} 
 
        table {margin: auto;
 	      border-spacing:0;
@@ -164,25 +169,26 @@
                 mouseover: highlightFeature,
             });
 
-	var shop_photo = (feature.properties['shop_photo'] !== null ? Autolinker.link(String(feature.properties['shop_photo'])) : '');
-
-	var shop_name = (feature.properties['shop_name'] !== null ? Autolinker.link(String(feature.properties['shop_name'])) : '');
-
-	var supply_list_str = (feature.properties['supply_list'] !== null ? Autolinker.link(String(feature.properties['supply_list'])) : '');
-
-
+var shop_photo = (feature.properties['shop_photo'] !== null ? Autolinker.link(String(feature.properties['shop_photo'])) : '');
+var shop_name = (feature.properties['shop_name'] !== null ? Autolinker.link(String(feature.properties['shop_name'])) : '');
+var supply_list_str = (feature.properties['supply_list'] !== null ? Autolinker.link(String(feature.properties['supply_list'])) : '');
 
 	supply_list_str = supply_list_str.split(";");
-	
+		
+	var general_notes =  supply_list_str[supply_list_str.length-2]
+
+		general_notes = general_notes.substring('general_notes=\''.length,general_notes.length-1)
+
+	var last_updated =  supply_list_str[supply_list_str.length-1]
+
+		last_updated = last_updated.substring('last_updated=\''.length,last_updated.length-1)
+
+
 	var supply_list_row = '';
 	var supply_list_cell = '';
 	
 	var table_start = '<table class=\"tg\">\
-                             <col style="width: 5px">\
-	  		     <col style="width: 260px">\
-	  		     <col style="width: 5px">\
-	  		     <col style="width: 5px">\
-         		     <col style="width: 5px">';
+                             <col style="width: 220px">';
 
 	var phy_supply_list_tabl = table_start;
 	var cst_supply_list_tabl = table_start;
@@ -190,7 +196,7 @@
 	var bio_supply_list_tabl = table_start;
 	var sft_supply_list_tabl = table_start;
 
-	for(var ii=0; ii < supply_list_str.length; ii++) {
+	for(var ii=0; ii < supply_list_str.length-2; ii++) {
 		supply_list_row = supply_list_str[ii]
 		supply_list_cell = supply_list_row.split(",")
 
@@ -206,13 +212,11 @@
 				  supply_list_cell[4].substring(10,supply_list_cell[4].length-1) +
 				  "</td></tr><tr><td>&nbsp</td></tr>"
 
-
 		     if(supply_list_cell[0].substring(0,3)=='phy'){phy_supply_list_tabl= phy_supply_list_tabl + supply_list_row}
 		else if(supply_list_cell[0].substring(0,3)=='cst'){cst_supply_list_tabl= cst_supply_list_tabl + supply_list_row}
 		else if(supply_list_cell[0].substring(0,3)=='chm'){chm_supply_list_tabl= chm_supply_list_tabl + supply_list_row}
 		else if(supply_list_cell[0].substring(0,3)=='bio'){bio_supply_list_tabl= bio_supply_list_tabl + supply_list_row}
 		else if(supply_list_cell[0].substring(0,3)=='sft'){sft_supply_list_tabl= sft_supply_list_tabl + supply_list_row}
-
 }}
 
 		phy_supply_list_tabl = phy_supply_list_tabl.substring(0,phy_supply_list_tabl.length-23) +  '</table>';
@@ -222,21 +226,22 @@
 		sft_supply_list_tabl = sft_supply_list_tabl.substring(0,sft_supply_list_tabl.length-23) +  '</table>';
 		
             var popupContent = '<div class="accordion" id="accordionExample">'+
-'<div class="card"><div class="card-header" id="headingZero"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseZero" aria-expanded="false" aria-controls="collapseZero">'+shop_name+'</button></h2></div><div id="collapseZero" class="collapse show" aria-labelledby="headingZero" data-parent="#accordionExample"><div class="card-body"><center>'+ shop_photo + '</center></div></div></div>'+
+'<div class="card"><div class="card-header" id="headingZero"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseZero" aria-expanded="false" aria-controls="collapseZero">'+shop_name+'</button></h2></div><div id="collapseZero" class="collapse" aria-labelledby="headingZero" data-parent="#accordionExample"><div class="card-body"><center>'+ shop_photo + '</center></div></div></div>'+
 '<div class="card"><div class="card-header" id="headingOne"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Physics</button></h2></div><div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample"><div class="card-body">'+ phy_supply_list_tabl + '</div></div></div>'+
 '<div class="card"><div class="card-header" id="headingTwo"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Chemistry</button></h2></div><div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample"><div class="card-body">'+ cst_supply_list_tabl + '</div></div></div>'+
 '<div class="card"><div class="card-header" id="headingThree"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Chemicals</button></h2></div><div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">\
 <div class="card-body">'+ chm_supply_list_tabl + '</div></div></div>'+
 '<div class="card"><div class="card-header" id="headingFour"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Biology</button></h2></div><div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample"><div class="card-body">'+ bio_supply_list_tabl + '</div></div></div>'+
 '<div class="card"><div class="card-header" id="headingFive"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Safety</button></h2></div><div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample"><div class="card-body">'+ sft_supply_list_tabl + '</div></div></div>'+
-'</div>';
+'<div class="card"><div class="card-header" id="headingSix"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">General Notes</button></h2></div><div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample"><div class="card-body"><table><tr><td>'+general_notes+'</td></tr></table></div></div></div>'+
+'</div><center><br>Last Updated: ' + last_updated + '</center>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
         function style_001_shops_2_0() {
             return {
                 pane: 'pane_001_shops_2',
-                radius: 8.0,
+                radius: 6.0,
                 opacity: 1,
                 color: 'rgba(0,0,0,1.0)',
                 dashArray: '',
