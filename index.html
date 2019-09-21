@@ -24,10 +24,10 @@
 		background-color: #ffffff;
 		font-size: 15px;
 		padding: 0px;
- 		width: 400px;
 		color: black;
 		font-weight: bold;
-		cursor: pointer;
+		width: 245px;
+                cursor: pointer;
  		display: block; 
 		margin: 0 auto;
 		overflow: hidden;} 
@@ -41,13 +41,19 @@
                        font-weight: bold;} 
 
        table {margin: auto;
-	       border-spacing:0;
- 	       border-collapse: collapse;
-               font-size: 14px;
-	       font-weight: normal;}
+	      border-spacing:0;
+ 	      border-collapse: collapse;
+              font-size: 12px;
+	      font-weight: normal;}
 
-	       tr:nth-child(odd) {background-color:  #f0f0f0;}
-		
+       /* tr:nth-child(odd) {background-color:  #f0f0f0;} */
+
+       tg{border-collapse:collapse;border-spacing:0;}
+
+
+       .tg .tg-bold{border-color:inherit;text-align:center;vertical-align:top;font-weight:bold}
+       .tg .tg-norm{border-color:inherit;text-align:center;vertical-align:top}
+	       
     	input{border:2px solid #c8c8c8;}
 
 </style>
@@ -171,10 +177,12 @@
 	var supply_list_row = '';
 	var supply_list_cell = '';
 	
-	var table_start = '<table>\
-                                    <col style="width: 250px">\
-	  		            <col align="width: 50px">\
-	  		            <col style="width: 50px">';
+	var table_start = '<table class=\"tg\">\
+                             <col style="width: 5px">\
+	  		     <col style="width: 260px">\
+	  		     <col style="width: 5px">\
+	  		     <col style="width: 5px">\
+         		     <col style="width: 5px">';
 
 	var phy_supply_list_tabl = table_start;
 	var cst_supply_list_tabl = table_start;
@@ -188,15 +196,15 @@
 
 		if(supply_list_cell[1].search('true')>-1){		
 
-		supply_list_row = "<tr><td>" + 
+		supply_list_row = "<tr><td class = \'tg-bold\'>" + 
                                   supply_list_cell[0].substring(10,supply_list_cell[0].length-1) + 
-				  "</td><td align=\"right\">" +
+				  "</td></tr><tr><td class = \'tg-norm\'>" +
                                   supply_list_cell[2].substring(10,supply_list_cell[2].length-1) + 
-                                  "</td><td>" +
+                                  " " +
 				  supply_list_cell[3].substring(10,supply_list_cell[3].length-1) +
-				  "</td><td>" +
+				  " " +
 				  supply_list_cell[4].substring(10,supply_list_cell[4].length-1) +
-				  "</td></tr>"
+				  "</td></tr><tr><td>&nbsp</td></tr>"
 
 
 		     if(supply_list_cell[0].substring(0,3)=='phy'){phy_supply_list_tabl= phy_supply_list_tabl + supply_list_row}
@@ -206,11 +214,12 @@
 		else if(supply_list_cell[0].substring(0,3)=='sft'){sft_supply_list_tabl= sft_supply_list_tabl + supply_list_row}
 
 }}
-	     	phy_supply_list_tabl = phy_supply_list_tabl +  '</table>';
-		cst_supply_list_tabl = cst_supply_list_tabl +  '</table>';
-		chm_supply_list_tabl = chm_supply_list_tabl +  '</table>';
-		bio_supply_list_tabl = bio_supply_list_tabl +  '</table>';
-		sft_supply_list_tabl = sft_supply_list_tabl +  '</table>';
+
+		phy_supply_list_tabl = phy_supply_list_tabl.substring(0,phy_supply_list_tabl.length-23) +  '</table>';
+		cst_supply_list_tabl = cst_supply_list_tabl.substring(0,cst_supply_list_tabl.length-23) +  '</table>';
+		chm_supply_list_tabl = chm_supply_list_tabl.substring(0,chm_supply_list_tabl.length-23) +  '</table>';
+		bio_supply_list_tabl = bio_supply_list_tabl.substring(0,bio_supply_list_tabl.length-23) +  '</table>';
+		sft_supply_list_tabl = sft_supply_list_tabl.substring(0,sft_supply_list_tabl.length-23) +  '</table>';
 		
             var popupContent = '<div class="accordion" id="accordionExample">'+
 '<div class="card"><div class="card-header" id="headingZero"><h2 class="mb-0"><button class="btn btn-link collapsed" type="button"data-toggle="collapse"data-target="#collapseZero" aria-expanded="false" aria-controls="collapseZero">'+shop_name+'</button></h2></div><div id="collapseZero" class="collapse show" aria-labelledby="headingZero" data-parent="#accordionExample"><div class="card-body"><center>'+ shop_photo + '</center></div></div></div>'+
@@ -227,7 +236,7 @@
         function style_001_shops_2_0() {
             return {
                 pane: 'pane_001_shops_2',
-                radius: 4.0,
+                radius: 8.0,
                 opacity: 1,
                 color: 'rgba(0,0,0,1.0)',
                 dashArray: '',
@@ -261,56 +270,6 @@
         setBounds();
 
         </script>
-
-
-<div class="accordion" id="accordionExample">
-
-<!-- ########################### Physics ################################ -->
-
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button class="btn btn-link collapsed" 
-                type="button" 
-                data-toggle="collapse"
-                data-target="#collapseOne" 
-                aria-expanded="false" 
-                aria-controls="collapseOne">
-
-          Physics
-
-        </button>
-      </h2>
-    </div>
-    <div id="collapseOne" 
-         class="collapse"
-         aria-labelledby="headingOne"
-         data-parent="#accordionExample">
-      <div class="card-body">
-        <table>
-          <col style="width: 20px">
-	  <col style="width: 20px">
-	  <col style="width: 20px">
-	  <col style="width: 20px">
-
-<!-- ### phy001 ### -->
-
-  	  <tr>
-            <td><input name="phy001-a" type="checkbox"></td>
-            <td>Ammeter</td>
-    	    <td><input align = "center" name="phy001-b" type="text" size="5"></td>
-      	    <td>
-              <select name="phy001-c">
-    	        <option value="LD">LD</option>
-    	        <option value="USD">USD</option>
-    	      </select>
-            </td>
-  	  </tr>
-	</table>
-      </div>
-    </div>
-  </div>
-</div>
 
     </body>
 </html>
